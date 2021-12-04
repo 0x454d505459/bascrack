@@ -31,4 +31,4 @@ You need to have nim version 1.4.X to compile
 
 
 ## Additionnal Note
-The `bascrack.nim` file was my original one, but it was slow as hell and poorly written, so I made another version but asynchronious that time. The file is here just for comparison.
+The `bascrack.nim` was my original one, but it was slow as hell and poorly written, so I made another version but asynchronious that time. The
