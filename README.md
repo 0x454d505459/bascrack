@@ -17,6 +17,9 @@ This will run the program and start finding working projects ids
  - --verbose, -v       # Show invalid ids
  - --loops, -l LOOPS   # How many codes to try, default=100
 
+### Getting the cookie
+Open firefox and loggin to the basthon instance, open networking tab in the dev tools of your favourite browser (firefox is best), reload the page, take the first request and look for `cookie: ......` in the request's headers
+
 ### Note
 This was meant for French users so there is no english version (at least rn)
 
