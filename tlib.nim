@@ -1,4 +1,4 @@
-import strformat, os, strutils#, osproc
+import strformat, os, strutils, osproc
 
 ##[
  # Tlib
@@ -79,26 +79,11 @@ proc `**`*(n:int, z:int): int=
 proc `**`*(n:float, z:float): float=
     result = n*z
 
-when defined(windows):
-    import windows
-    proc readWithoutEcho*(prompt: string): string=
-        ## Same as read but doesn't show what is typed, usefull for passwords (windows version)
-        var inputHandle = GetStdHandle(STD_INPUT_HANDLE)
-        var conMode: DWORD
-        discard GetConsoleMode(inputHandle, conMode)
-        stdout.write(prompt)
-        discard SetConsoleMode(inputHandle, conMode - ENABLE_ECHO_INPUT)
-        var input = stdin.readLine()
-        discard SetConsoleMode(inputHandle, conMode)
-        return input
-else:
-    
-    proc readWithoutEcho*(prompt: cstring) : cstring {.header: "<unistd.h>", importc: "getpass".} ## Same as read but doesn't show what is typed, usefull for passwords (*nix version)
 
 proc clear*()=
     ## Clear the screen
     var cmd: string    
-    when defined(windows): cmd = cls else: cmd = "clear"
+    when defined(windows): cmd = "cls" else: cmd = "clear"
     discard os.execShellCmd(cmd)
 
 when isMainModule:
@@ -107,5 +92,5 @@ when isMainModule:
 
 when not isMainModule and defined(windows):
     let regi = execCmdEx("reg query HKCU\Console /v VirtualTerminalLevel")[0]
-    if "0x1" in regi:
+    if not ("0x1" in regi):
         discard os.execShellCmd("reg add HKCU\Console /v VirtualTerminalLevel /t REG_DWORD /d 00000001")
